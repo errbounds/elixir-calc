@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="JYXuTVw78st6JJlezlE6iHuiobUwPUAGwW7cZ6iSXtc" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  <title>성장의 비약 계산기</title>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Jua', 'malgun-gothic';
+    }
+
+    #elixir-calculator {
+      max-width: 960px;
+    }
+
+    footer {
+      background-color: #ebecec;
+    }
+  </style>
+</head>
+<!-- 
+  TODO: exlixr -> exlixir 수정 (v)
+  TODO: rename parse.js
+ -->
+
+<body>
+  <!-- modals -->
+  <div class="modal fade" tabindex="-1" id="elixir-calc-result" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">성장의 비약 사용 결과</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              레벨: <span class="user-level"></span>
+            </div>
+            <div class="col-12">
+              경험치: <span class="user-percent"><span>%</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-dismiss="modal">confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="elixir-calculator" class="container mx-auto">
+    <div class="row text-center py-5">
+      <h1 class="col-12">성장의 비약 계산기</h1>
+      <p class="text-center text-secondary fs-5">KMS 1.2.159(2021. 12. 30)<br>250~259레벨 구간 누적 레벨업 필요 경험치가 약16% 감소됩니다.
+      </p>
+    </div>
+    <div class="row gy-2 fs-4">
+      <!-- level -->
+      <div class="col-lg-12">
+        <label for="user-level">레벨</label>
+        <div class="row">
+          <div class="col-lg-12">
+            <input type="range" class="form-range" min="200" max="299" id="user-level">
+          </div>
+          <div class="col-lg-12 text-end"><span class="label-sync">0</span></div>
+        </div>
+      </div>
+      <!-- percentage -->
+      <div class="col-lg-12">
+        <label for="user-percent">경험치</label>
+        <div class="row">
+          <div class="col-lg-12">
+            <input type="range" class="form-range" min="0" max="100" step="0.001" id="user-percent">
+          </div>
+          <div class="col-lg-12 text-end"><span class="label-sync">0</span><span>%</span></div>
+        </div>
+      </div>
+      <!-- elixirs-->
+      <div class="col-md-6">
+        <label for="">성장의 비약 1 (200~209)</label>
+        <div class="row">
+          <div class="col-lg-12">
+            <input type="range" class="form-range" id="elixir1" min="0" max="10">
+          </div>
+          <div class="col-lg-12 text-end"><span class="label-sync">0</span><span>개</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">성장의 비약 2 (210~219)</label>
+        <div class="row">
+          <div class="col-lg-12">
+            <input type="range" class="form-range" id="elixir2" min="0" max="10">
+          </div>
+          <div class="col-lg-12 text-end"><span class="label-sync">0</span><span>개</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">성장의 비약 3 (220~229)</label>
+        <div class="row">
+          <div class="col-lg-12">
+            <input type="range" class="form-range" id="elixir3" min="0" max="10">
+          </div>
+          <div class="col-lg-12 text-end"><span class="label-sync">0</span><span>개</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">태풍 성장의 비약 (230~239)</label>
+        <div class="row">
+          <div class="col-lg-12">
+            <input type="range" class="form-range" id="elixir4" min="0" max="10">
+          </div>
+          <div class="col-lg-12 text-end"><span class="label-sync">0</span><span>개</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">극한 성장의 비약 (240~249)</label>
+        <div class="row">
+          <div class="col-lg-12">
+            <input type="range" class="form-range" id="elixir5" min="0" max="10">
+          </div>
+          <div class="col-lg-12 text-end"><span class="label-sync">0</span><span>개</span></div>
+        </div>
+        </divW>
+      </div>
+      <!-- button -->
+      <div class="d-flex justify-content-center pt-5">
+        <button id="elixir-calc-btn" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal"
+          data-bs-target="#elixir-calc-result">submit</button>
+      </div>
+    </div>
+  </div>
+  <!-- footer -->
+  <footer class="footer mt-5 p-3">
+    <div class="text-secondary fs-6 text-center">
+      <div>본 계산기는 실제 결과와 다를 수 있습니다.<br>본 페이지는 NEXON KOREA와 무관합니다.</div>
+      <div class="mb-2">Exp Table by <a target="_blank" href="https://namu.wiki/w/%EB%A9%94%EC%9D%B4%ED%94%8C%EC%8A%A4%ED%86%A0%EB%A6%AC/%EC%8B%9C%EC%8A%A4%ED%85%9C/%EA%B2%BD%ED%97%98%EC%B9%98">namu.wiki</a>. CSS by <a target="_blank" href="https://getbootstrap.com/">Bootstrap 5</a>. Fontfamily by <a target="_blank" href="https://www.woowahan.com/fonts">배달의민족 주아체</a>. </div>
+      <div>forstackup@gmail.com</div>
+      <div>Firefox 96 Chrome 97</div>
+    </div>
+
+  </footer>
+
+  <script src="./label-sync.js"></script>
+  <script src="./exp-table.js"></script>
+  <script src="./parse.js"></script>
+  <!-- <script src="./script.js"></script> -->
+</body>
+
+</html>
