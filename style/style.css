@@ -1,0 +1,12 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Jua', 'malgun-gothic';
+}
+
+#elixir-calculator {
+  max-width: 960px;
+}
+
+footer {
+  background-color: #ebecec;
+}
